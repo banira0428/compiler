@@ -36,7 +36,8 @@
             |-type : DECL_IDENTS, 
               |-type : IDENT, variable : k
           |-type : DECLARATIONS, 
-            |-type : ARRAY, 
+            |-type : ARRAY_DEFINE, 
+              |-type : ARRAY, 
   |-type : STATEMENTS, 
     |-type : STATEMENT, 
       |-type : ASSIGN, 

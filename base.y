@@ -44,7 +44,7 @@ extern Node *parse_result;
 %token DEC
 %token <sp>IDENT
 %token <ival>NUMBER
-%type <np> program declarations decl_statement decl_idents
+%type <np> declarations decl_statement decl_idents
 %type <np> statements statement assignment_stmt
 %type <np> expression inc_expression add_expression term fore_inc_factor factor
 %type <np> var array_index func_stmt params param funccall_stmt args loop_stmt
@@ -59,7 +59,7 @@ declarations : decl_statement declarations { $$ = build_nodes(DECLARATIONS_AST, 
     | decl_statement { $$ = build_nodes(DECLARATIONS_AST,1, $1); };
 
 decl_statement : DEFINE decl_idents SEMIC { $$ = build_nodes(DEFINE_AST,1, $2); }
-    | ARRAY IDENT array_index SEMIC { $$ = build_array_node(ARRAY_AST, $2, NULL); }
+    | ARRAY IDENT array_index SEMIC { $$ = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, $2, NULL)); }
     | func_stmt { $$ = build_nodes(FUNC_DEFINE_AST,1, $1); };
 
 decl_idents : IDENT COMMA decl_idents { $$ = build_nodes(DECL_IDENTS_AST,2, build_ident_node(IDENT_AST,$1), $3); };
@@ -68,7 +68,7 @@ decl_idents : IDENT COMMA decl_idents { $$ = build_nodes(DECL_IDENTS_AST,2, buil
 statements : statement statements { $$ = build_nodes(STATEMENTS_AST,2, $1, $2); }
     | statement { $$ = build_nodes(STATEMENTS_AST,1, $1); }
     ;
-
+    
 statement : assignment_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
     | loop_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
     | cond_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
@@ -100,7 +100,7 @@ add_expression : add_expression add_op term
         if($1 == OP_INC){
             $$ = build_nodes(INC_AST, 1, $2); 
         }else{
-            $$ = build_nodes(DEC_AST, 1, $2); 
+            $$ = build_nodes(DEC_AST, 1, $2);
         }
     }
     | term 
@@ -150,7 +150,7 @@ array_index : array_index L_BRACKET expression R_BRACKET { $$ = build_nodes(ARRA
 | L_BRACKET expression R_BRACKET { $$ = build_nodes(ARRAY_INDEX_AST, 1, $2); }
 ;
 
-func_stmt : FUNC IDENT L_PARAN params R_PARAN L_BRACE program R_BRACE { $$ = build_nodes(FUNC_AST, 3, build_ident_node(IDENT_AST,$2), $4, $7);}
+func_stmt : FUNC IDENT L_PARAN params R_PARAN L_BRACE declarations statements R_BRACE { $$ = build_nodes(FUNC_AST, 4, build_ident_node(IDENT_AST,$2), $4, $7, $8);}
 ;
 
 params : param COMMA params { $$ = build_nodes(PARAMS_AST, 2, $1, $3);}
