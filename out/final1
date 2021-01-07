@@ -1,0 +1,46 @@
+ 
+ 
+  
+  
+   
+     
+     
+|-type : PROGRAM, 
+  |-type : DECLARATIONS, 
+    |-type : DEFINE, 
+      |-type : DECL_IDENTS, 
+        |-type : IDENT, variable : i
+    |-type : DECLARATIONS, 
+      |-type : DEFINE, 
+        |-type : DECL_IDENTS, 
+          |-type : IDENT, variable : sum
+  |-type : STATEMENTS, 
+    |-type : STATEMENT, 
+      |-type : ASSIGN, 
+        |-type : IDENT, variable : sum
+        |-type : NUM, value : 0, 
+    |-type : STATEMENTS, 
+      |-type : STATEMENT, 
+        |-type : ASSIGN, 
+          |-type : IDENT, variable : i
+          |-type : NUM, value : 1, 
+      |-type : STATEMENTS, 
+        |-type : STATEMENT, 
+          |-type : WHILE, 
+            |-type : LT, 
+              |-type : IDENT, variable : i
+              |-type : NUM, value : 11, 
+            |-type : STATEMENTS, 
+              |-type : STATEMENT, 
+                |-type : ASSIGN, 
+                  |-type : IDENT, variable : sum
+                  |-type : PLUS, 
+                    |-type : IDENT, variable : sum
+                    |-type : IDENT, variable : i
+              |-type : STATEMENTS, 
+                |-type : STATEMENT, 
+                  |-type : ASSIGN, 
+                    |-type : IDENT, variable : i
+                    |-type : PLUS, 
+                      |-type : IDENT, variable : i
+                      |-type : NUM, value : 1, 

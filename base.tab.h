@@ -82,7 +82,19 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 9 "base.y" /* yacc.c:1909  */
+
+ struct node *np; // 抽象構文木
+ int ival; // 数
+ char* sp; // 変数名
+
+#line 95 "base.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

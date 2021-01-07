@@ -1,5 +1,6 @@
 %{
 #include "base.tab.h"
+#include <string.h>
 %}
 %%
 define { return DEFINE;}
@@ -34,7 +35,10 @@ break { return BREAK;}
 -- { return DEC; }
 
 
-[a-zA-Z][a-zA-Z0-9]* { return IDENT; }
-[0-9]+ { return NUMBER; }
+[a-zA-Z][a-zA-Z0-9]* {
+    yylval.sp = (char*)malloc(sizeof(char) * yyleng);
+    strncpy(yylval.sp, yytext, yyleng);
+    return IDENT; }
+[0-9]+ { yylval.ival = atoi(yytext); return NUMBER; }
 [ \t\n];
 %%

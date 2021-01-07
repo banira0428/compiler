@@ -1,0 +1,145 @@
+ 
+  
+  
+  
+  
+   
+   
+   
+   
+   
+   
+        
+     
+ 
+         
+     
+ 
+         
+     
+ 
+     
+ 
+     
+ |-type : PROGRAM, 
+  |-type : DECLARATIONS, 
+    |-type : DEFINE, 
+      |-type : DECL_IDENTS, 
+        |-type : IDENT, variable : fizz
+    |-type : DECLARATIONS, 
+      |-type : DEFINE, 
+        |-type : DECL_IDENTS, 
+          |-type : IDENT, variable : buzz
+      |-type : DECLARATIONS, 
+        |-type : DEFINE, 
+          |-type : DECL_IDENTS, 
+            |-type : IDENT, variable : fizzbuzz
+        |-type : DECLARATIONS, 
+          |-type : DEFINE, 
+            |-type : DECL_IDENTS, 
+              |-type : IDENT, variable : others
+          |-type : DECLARATIONS, 
+            |-type : DEFINE, 
+              |-type : DECL_IDENTS, 
+                |-type : IDENT, variable : i
+  |-type : STATEMENTS, 
+    |-type : STATEMENT, 
+      |-type : ASSIGN, 
+        |-type : IDENT, variable : fizz
+        |-type : NUM, value : 0, 
+    |-type : STATEMENTS, 
+      |-type : STATEMENT, 
+        |-type : ASSIGN, 
+          |-type : IDENT, variable : buzz
+          |-type : NUM, value : 0, 
+      |-type : STATEMENTS, 
+        |-type : STATEMENT, 
+          |-type : ASSIGN, 
+            |-type : IDENT, variable : fizzbuzz
+            |-type : NUM, value : 0, 
+        |-type : STATEMENTS, 
+          |-type : STATEMENT, 
+            |-type : ASSIGN, 
+              |-type : IDENT, variable : others
+              |-type : NUM, value : 0, 
+          |-type : STATEMENTS, 
+            |-type : STATEMENT, 
+              |-type : ASSIGN, 
+                |-type : IDENT, variable : i
+                |-type : NUM, value : 1, 
+            |-type : STATEMENTS, 
+              |-type : STATEMENT, 
+                |-type : WHILE, 
+                  |-type : LT, 
+                    |-type : IDENT, variable : i
+                    |-type : NUM, value : 31, 
+                  |-type : STATEMENTS, 
+                    |-type : STATEMENT, 
+                      |-type : IF, 
+                        |-type : IF_B, 
+                          |-type : EQ, 
+                            |-type : MUL, 
+                              |-type : FACTOR, 
+                                |-type : DIV, 
+                                  |-type : IDENT, variable : i
+                                  |-type : NUM, value : 15, 
+                              |-type : NUM, value : 15, 
+                            |-type : IDENT, variable : i
+                          |-type : STATEMENTS, 
+                            |-type : STATEMENT, 
+                              |-type : ASSIGN, 
+                                |-type : IDENT, variable : fizzbuzz
+                                |-type : PLUS, 
+                                  |-type : IDENT, variable : fizzbuzz
+                                  |-type : NUM, value : 1, 
+                        |-type : ELSE_B, 
+                          |-type : ELIF_B, 
+                            |-type : IF_B, 
+                              |-type : EQ, 
+                                |-type : MUL, 
+                                  |-type : FACTOR, 
+                                    |-type : DIV, 
+                                      |-type : IDENT, variable : i
+                                      |-type : NUM, value : 3, 
+                                  |-type : NUM, value : 3, 
+                                |-type : IDENT, variable : i
+                              |-type : STATEMENTS, 
+                                |-type : STATEMENT, 
+                                  |-type : ASSIGN, 
+                                    |-type : IDENT, variable : fizz
+                                    |-type : PLUS, 
+                                      |-type : IDENT, variable : fizz
+                                      |-type : NUM, value : 1, 
+                          |-type : ELSE_B, 
+                            |-type : ELIF_B, 
+                              |-type : IF_B, 
+                                |-type : EQ, 
+                                  |-type : MUL, 
+                                    |-type : FACTOR, 
+                                      |-type : DIV, 
+                                        |-type : IDENT, variable : i
+                                        |-type : NUM, value : 5, 
+                                    |-type : NUM, value : 5, 
+                                  |-type : IDENT, variable : i
+                                |-type : STATEMENTS, 
+                                  |-type : STATEMENT, 
+                                    |-type : ASSIGN, 
+                                      |-type : IDENT, variable : buzz
+                                      |-type : PLUS, 
+                                        |-type : IDENT, variable : buzz
+                                        |-type : NUM, value : 1, 
+                            |-type : ELSE_B, 
+                              |-type : STATEMENTS, 
+                                |-type : STATEMENT, 
+                                  |-type : ASSIGN, 
+                                    |-type : IDENT, variable : others
+                                    |-type : PLUS, 
+                                      |-type : IDENT, variable : others
+                                      |-type : NUM, value : 1, 
+                    |-type : STATEMENTS, 
+                      |-type : STATEMENT, 
+                        |-type : ASSIGN, 
+                          |-type : IDENT, variable : i
+                          |-type : PLUS, 
+                            |-type : IDENT, variable : i
+                            |-type : NUM, value : 1, 
