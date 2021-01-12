@@ -73,3 +73,16 @@ typedef struct node{
   struct node *child;
   struct node *brother;
 } Node;
+
+typedef struct variable {
+  char* name;
+  int offset;
+  int size;
+} Var;
+
+typedef struct expression {
+  OP type;
+
+  struct expression *left;
+  struct expression *right;
+} Expr;

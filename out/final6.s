@@ -28,6 +28,8 @@
    
    
     
+    .text
+main:
 |-type : PROGRAM, 
   |-type : DECLARATIONS, 
     |-type : FUNC_DEFINE, 

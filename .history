@@ -1,0 +1,35 @@
+continue
+memdump
+memdump 0x10004000
+memdump 0x10004004
+memdump 0x10004008
+print
+quit
+step 10
+print_all_regs
+step 10
+print_all_regs
+quit
+step 10
+step 1
+print
+print 0x10004004
+step 1
+print 0x10004000
+step 1
+print 0x10004000
+print 0x10004004
+print_all_regs
+quit
+step 10
+step 5
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+quit

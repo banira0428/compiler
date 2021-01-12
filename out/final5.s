@@ -23,6 +23,8 @@
        
  
  
+    .text
+main:
 |-type : PROGRAM, 
   |-type : DECLARATIONS, 
     |-type : ARRAY_DEFINE, 
