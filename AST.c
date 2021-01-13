@@ -145,9 +145,7 @@ void codeGen(Node *node, FILE *fp){
     fprintf(fp, "$LOOP%d:\n",n);
 
     codeGenForCondOp(node->child, fp);
-    char label[10]; 
-    sprintf(label, "$EXIT%d", n);
-    codeGenForBranch(node->child,fp, label);
+    codeGenForBranch(node->child,fp, "$EXIT", n);
 
     codeGen(node->child->brother,fp);
     fprintf(fp, "        j $LOOP%d\n", n);
@@ -164,9 +162,7 @@ void codeGen(Node *node, FILE *fp){
     fprintf(fp, "$LOOP%d:\n",n);
 
     codeGenForCondOp(node->child->brother->child, fp);
-    char label[10]; 
-    sprintf(label, "$EXIT%d", n);
-    codeGenForBranch(node->child->brother->child,fp, label);
+    codeGenForBranch(node->child->brother->child,fp,"$EXIT", n);
 
     codeGen(node->child->brother->brother->brother,fp);
 
@@ -229,10 +225,7 @@ void codeGenForIf(Node *node, FILE *fp){
     num_branches++;
 
     codeGenForCondOp(node->child, fp);
-
-    char label[10]; 
-    sprintf(label, "$L%d", n);
-    codeGenForBranch(node->child,fp, label);
+    codeGenForBranch(node->child,fp, "$L", n);
     codeGen(node->child->brother,fp);
     fprintf(fp, "        j $END%d\n", num_if_blocks);
     fprintf(fp, "$L%d:\n", n);
@@ -350,27 +343,27 @@ void codeGenForOperate(Node *node, FILE *fp){
   }
 }
 
-void codeGenForBranch(Node *node, FILE *fp, char *label){
+void codeGenForBranch(Node *node, FILE *fp, char *label, int n){
   if(node->type == EQ_AST){
-    fprintf(fp, "        bne $t1, $t3, %s\n", label);
+    fprintf(fp, "        bne $t1, $t3, %s%d\n", label, n);
     fprintf(fp, "        nop\n");
   }else if(node->type == LT_AST){
     fprintf(fp, "        slt $t2, $t1, $t3\n");
-    fprintf(fp, "        beq $t2, $zero, %s\n", label);    
+    fprintf(fp, "        beq $t2, $zero, %s%d\n", label, n);    
     fprintf(fp, "        nop\n");
   }else if(node->type == LTE_AST){
     fprintf(fp, "        addi $t3, $t3, 1\n");
     fprintf(fp, "        slt $t2, $t1, $t3\n");
-    fprintf(fp, "        beq $t2, $zero, %s\n", label);
+    fprintf(fp, "        beq $t2, $zero, %s%d\n", label, n);
     fprintf(fp, "        nop\n");
   }else if(node->type == GT_AST){
     fprintf(fp, "        slt $t2, $t3, $t1\n");
-    fprintf(fp, "        beq $t2, $zero, %s\n", label);
+    fprintf(fp, "        beq $t2, $zero, %s%d\n", label, n);
     fprintf(fp, "        nop\n");
   }else if(node->type == GTE_AST){
     fprintf(fp, "        addi $t3, $t3, 1\n");
     fprintf(fp, "        slt $t2, $t3, $t1\n");
-    fprintf(fp, "        beq $t2, $zero, %s\n", label);
+    fprintf(fp, "        beq $t2, $zero, %s%d\n", label, n);
     fprintf(fp, "        nop\n");
   }
 }

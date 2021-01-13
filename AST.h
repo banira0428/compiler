@@ -12,7 +12,7 @@ void codeGenForArrayAssign(Node *node, FILE *fp, int offset, int depth, Var *v);
 void codeGenForIf(Node *node, FILE *fp);
 void codeGenForElse(Node *node, FILE *fp);
 
-void codeGenForBranch(Node *node, FILE *fp, char *label);
+void codeGenForBranch(Node *node, FILE *fp, char *label, int n);
 
 void codeGenForCondOp(Node *node, FILE *fp);
 int isCondOperator(Node *node);

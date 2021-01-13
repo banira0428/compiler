@@ -18,18 +18,10 @@ stop:
         .text 0x00001000
 main:
         la $t0, RESULT
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 1
-## END_OF_ASSIGN_RIGHT
         sw $v0, 4($t0)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 1
-## END_OF_ASSIGN_RIGHT
         sw $v0, 0($t0)
-## END_OF_ASSIGN
 $LOOP0:
         lw $v0, 0($t0)
         nop
@@ -40,8 +32,6 @@ $LOOP0:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT0
         nop
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         lw $t1, 4($t0)
         nop
         sw $t1, 16($t0)
@@ -56,11 +46,7 @@ $LOOP0:
         mflo $v0
         sw $v0, 12($t0)
         nop
-## END_OF_ASSIGN_RIGHT
         sw $v0, 4($t0)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         lw $t1, 0($t0)
         nop
         sw $t1, 16($t0)
@@ -73,9 +59,7 @@ $LOOP0:
         add $v0, $t1, $t3
         sw $v0, 12($t0)
         nop
-## END_OF_ASSIGN_RIGHT
         sw $v0, 0($t0)
-## END_OF_ASSIGN
         j $LOOP0
         nop
 $EXIT0:
