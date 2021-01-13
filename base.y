@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include "base.tab.h"
-#include "AST.h"
+#include "build_node.h"
 
 extern Node *parse_result;
 %}
