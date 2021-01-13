@@ -1,5 +1,6 @@
 N = base
 M = 1
+A = 
 
 lex:
 	flex ${N}.l
@@ -23,6 +24,12 @@ test:
 	./${N} < src/final4 > out/final4.s
 	./${N} < src/final5 > out/final5.s
 	./${N} < src/final6 > out/final6.s
+
+maps:
+	maps -e out/final${M}.s -mh4
+
+addr:
+	addr2line -e ./base ${A}
 
 
 

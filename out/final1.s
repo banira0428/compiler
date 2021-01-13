@@ -23,25 +23,38 @@ main:
         li $v0, 1
         sw $v0, 0($t0)
 $LOOP0:
-        lw $t1, 0($t0)
+        lw $v0, 0($t0)
         nop
-        li $t3, 11
+        add $t1, $v0, $zero
+        li $v0, 11
+        add $t3, $v0, $zero
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT0
         nop
         lw $t1, 4($t0)
         nop
-        lw $t3, 0($t0)
+        sw $t1, 16($t0)
+        lw $t1, 0($t0)
+        nop
+        sw $t1, 20($t0)
+        lw $t1, 16($t0)
+        nop
+        lw $t3, 20($t0)
         nop
         add $v0, $t1, $t3
-        add $t1, $v0, $zero
-        li $t3, 1
-        add $v0, $t1, $t3
+        sw $v0, 12($t0)
         sw $v0, 4($t0)
         lw $t1, 0($t0)
         nop
-        li $t3, 1
+        sw $t1, 12($t0)
+        li $t1, 1
+        sw $t1, 16($t0)
+        lw $t1, 12($t0)
+        nop
+        lw $t3, 16($t0)
+        nop
         add $v0, $t1, $t3
+        sw $v0, 8($t0)
         sw $v0, 0($t0)
         j $LOOP0
         nop

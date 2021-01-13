@@ -1382,7 +1382,7 @@ yyreduce:
 
   case 7:
 #line 62 "base.y" /* yacc.c:1646  */
-    { (yyval.np) = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, (yyvsp[-2].sp), NULL)); }
+    { (yyval.np) = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, (yyvsp[-2].sp), (yyvsp[-1].np))); }
 #line 1387 "base.tab.c" /* yacc.c:1646  */
     break;
 

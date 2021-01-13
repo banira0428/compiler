@@ -7,10 +7,13 @@ Node *parse_result = NULL;
 
 Var *variables[10];
 int num_vars = 0; 
+int offset_vars = 0; 
 
 int num_loops = 0;
 int num_branches = 0;
 int num_if_blocks = 0;
+
+int heap_addr = 4;
 
 char* types[] = {"IDENT","NUM","ASSIGN","PLUS","MINUS","MUL","DIV","SUR","INC","DEC","EQ","LT","LTE","GT","GTE",
   "WHILE","IF","IF_B","ELIF_B","ELSE_B","ARRAY_INDEX","ARRAY",
@@ -77,8 +80,7 @@ Node* build_array_node(NType t, char* s, Node* index){
   }
   p->type = t;
   p->variable = s;
-  p->array_index = index;
-  p->child = NULL;
+  p->child = index;
   return p;
 }
 
@@ -109,9 +111,6 @@ void printTree(Node *node, int depth){
   printf(space);
   printNode(node);
 
-  if(node->array_index != NULL){
-    printTree(node->array_index, depth + 2);
-  }
   if(node->child != NULL){
     printTree(node->child, depth + 2);
   }
@@ -163,15 +162,44 @@ void gen_code(Node *node, FILE *fp){
   if(node->type == DECL_IDENTS_AST){
     Var *v;
     v = (Var *)malloc(sizeof(Var));
-    v->offset = num_vars * 4;
+    v->offset = offset_vars;
     v->name = node->child->variable;
     v->size = 1;
     variables[num_vars] = v;
     num_vars++;
+    offset_vars+= v->size * 4;
+  }else if(node->type == ARRAY_DEFINE_AST){
+    Var *v;
+    v = (Var *)malloc(sizeof(Var));
+    v->offset = offset_vars;
+    v->name = node->child->variable;
+    v->size = node->child->child->child->ivalue;
+    variables[num_vars] = v;
+    num_vars++;
+    offset_vars+= v->size * 4;
+
   }else if(node->type == ASSIGN_AST){
     int offset = getOffset(node->child);
     codeGeneration_for_expression(node->child->brother, fp);
-    fprintf(fp, "        sw $v0, %d($t0)\n", offset);
+
+    if(node->child->type == IDENT_AST){
+      fprintf(fp, "        sw $v0, %d($t0)\n", offset);
+    }else if(node->child->type == ARRAY_AST){
+      if(node->child->child->child->type == IDENT_AST){
+        codeGenForIdentOrNumber(node->child->child->child, "t1", fp);
+        fprintf(fp, "        li $t3, 4\n");
+        fprintf(fp, "        mult $t1, $t3\n");
+        fprintf(fp, "        mflo $t1\n");
+        fprintf(fp, "        add $t1, $t1, $t0\n");
+        fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+        fprintf(fp, "        sw $v0, 0($t1)\n");
+      }else if(node->child->child->child->type == NUM_AST){
+        fprintf(fp, "        addi $t1, $t0, %d\n", node->child->child->child->ivalue * 4 + offset);
+        fprintf(fp, "        sw $v0, 0($t1)\n");
+      }
+    }
+
+    
   }else if(node->type == WHILE_AST){
     int n = num_loops;
     num_loops++;
@@ -183,7 +211,6 @@ void gen_code(Node *node, FILE *fp){
     sprintf(label, "$EXIT%d", n);
     codeGenForBranch(node->child,fp, label);
 
-    fprintf(fp, "        nop\n");
     gen_code(node->child->brother,fp);
     fprintf(fp, "        j $LOOP%d\n", n);
     fprintf(fp, "        nop\n");
@@ -208,19 +235,13 @@ void gen_code(Node *node, FILE *fp){
 
 void codeGeneration_for_cond_expression(Node *node, FILE *fp){
   if(isCondOperator(node)){
-    if(isIdentOrNumber(node->child)){
-      codeGenForIdentOrNumber(node->child, "t1", fp);
-    }else{
-      codeGeneration_for_expression(node->child, fp);
-      fprintf(fp, "        add $t1, $v0, $zero\n");
-    }
+    codeGeneration_for_expression(node->child, fp);
+    fprintf(fp, "        add $t4, $v0, $zero\n");
 
-    if(isIdentOrNumber(node->child->brother)){
-      codeGenForIdentOrNumber(node->child->brother, "t3", fp);
-    }else{
-      codeGeneration_for_expression(node->child->brother, fp);
-      fprintf(fp, "        add $t3, $v0, $zero\n");
-    }
+    codeGeneration_for_expression(node->child->brother, fp);
+    
+    fprintf(fp, "        add $t1, $t4, $zero\n");
+    fprintf(fp, "        add $t3, $v0, $zero\n");
 
     //todo 命令セットが足りなくて使えない 
     //codeGenForCondOperate(node, fp);
@@ -259,24 +280,70 @@ void codeGenForElse(Node *node, FILE *fp){
   }
 }
 
-void codeGeneration_for_expression(Node *node, FILE *fp){
+void gen4(Node *node,FILE *fp){
 
   if(isOperator(node)){
-    if(isIdentOrNumber(node->child)){
+    Expr *expr;
+    expr = (Expr *)malloc(sizeof(Expr));
+    expr->type = node->type;
+    expr->result = heap_addr;
+    heap_addr += 4;
+
+    if(isOperator(node->child)){
+      expr->left = heap_addr;
+      gen4(node->child, fp);
+      heap_addr += 4;
+    }else if(isIdentOrNumber(node->child)){
+      expr->left = heap_addr;
       codeGenForIdentOrNumber(node->child, "t1", fp);
+      fprintf(fp, "        sw $t1, %d($t0)\n", offset_vars + heap_addr);
+      heap_addr += 4;
     }else{
-      codeGeneration_for_expression(node->child, fp);
-      fprintf(fp, "        add $t1, $v0, $zero\n");
+      if(node->child != NULL){
+        expr->left = heap_addr;
+        gen4(node->child, fp);
+        heap_addr += 4;
+      }
     }
 
-    if(isIdentOrNumber(node->child->brother)){
+    if(isOperator(node->child->brother)){
+      expr->right = heap_addr;
+      gen4(node->child, fp);
+      heap_addr += 4;
+    }else if(isIdentOrNumber(node->child->brother)){
+      expr->right = heap_addr;
       codeGenForIdentOrNumber(node->child->brother, "t3", fp);
+      fprintf(fp, "        sw $t3, %d($t0)\n", offset_vars + heap_addr);
+      heap_addr += 4;
     }else{
-      codeGeneration_for_expression(node->child, fp);
-      fprintf(fp, "        add $t3, $v0, $zero\n");
+      if(node->child->brother != NULL){
+        expr->right = heap_addr;
+        gen4(node->child->brother, fp);
+        heap_addr += 4;
+      }
     }
+
+    fprintf(fp, "        lw $t1, %d($t0)\n", offset_vars + expr->left);
+    fprintf(fp, "        nop\n");
+    fprintf(fp, "        lw $t3, %d($t0)\n", offset_vars + expr->right);
+    fprintf(fp, "        nop\n");
 
     codeGenForOperate(node, fp);
+
+    fprintf(fp, "        sw $v0, %d($t0)\n", offset_vars + expr->result);
+    fprintf(fp, "        nop\n");
+  }else{
+    if(node->child != NULL){
+      gen4(node->child, fp);
+    }
+  }
+}
+
+void codeGeneration_for_expression(Node *node, FILE *fp){
+  if(isOperator(node)){
+
+    gen4(node, fp);
+    heap_addr = 4;
     
   }else if(isIdentOrNumber(node)){
     codeGenForIdentOrNumber(node, "v0", fp);
@@ -306,23 +373,27 @@ void codeGenForOperate(Node *node, FILE *fp){
 void codeGenForBranch(Node *node, FILE *fp, char *label){
   if(node->type == EQ_AST){
     fprintf(fp, "        bne $t1, $t3, %s\n", label);
+    fprintf(fp, "        nop\n");
   }else if(node->type == LT_AST){
     fprintf(fp, "        slt $t2, $t1, $t3\n");
-    fprintf(fp, "        beq $t2, $zero, %s\n", label);
+    fprintf(fp, "        beq $t2, $zero, %s\n", label);    
+    fprintf(fp, "        nop\n");
   }else if(node->type == LTE_AST){
+    fprintf(fp, "        addi $t3, $t3, 1\n");
     fprintf(fp, "        slt $t2, $t1, $t3\n");
     fprintf(fp, "        beq $t2, $zero, %s\n", label);
-    fprintf(fp, "        bne $t1, $t3, %s\n", label);
+    fprintf(fp, "        nop\n");
   }else if(node->type == GT_AST){
     fprintf(fp, "        slt $t2, $t3, $t1\n");
     fprintf(fp, "        beq $t2, $zero, %s\n", label);
+    fprintf(fp, "        nop\n");
   }else if(node->type == GTE_AST){
+    fprintf(fp, "        addi $t3, $t3, 1\n");
     fprintf(fp, "        slt $t2, $t3, $t1\n");
     fprintf(fp, "        beq $t2, $zero, %s\n", label);
-    fprintf(fp, "        bne $t1, $t3, %s\n", label);
+    fprintf(fp, "        nop\n");
   }
 }
-
 
 int isCondOperator(Node *node){
   if(node->type == EQ_AST) return 1;
@@ -334,6 +405,7 @@ int isCondOperator(Node *node){
 }
 
 int isOperator(Node *node){
+  if(node == NULL) return 0;
   if(node->type == PLUS_AST) return 1;
   if(node->type == MINUS_AST) return 1;
   if(node->type == MUL_AST) return 1;
@@ -343,6 +415,7 @@ int isOperator(Node *node){
 }
 
 int isIdentOrNumber(Node *node){
+  if(node == NULL) return 0;
   return node->type == IDENT_AST || node->type == NUM_AST;
 }
 

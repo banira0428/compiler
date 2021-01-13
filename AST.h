@@ -69,7 +69,6 @@ typedef struct node{
   NType type;
   int ivalue;
   char* variable;
-  struct node *array_index;
   struct node *child;
   struct node *brother;
 } Node;
@@ -81,8 +80,8 @@ typedef struct variable {
 } Var;
 
 typedef struct expression {
-  OP type;
-
-  struct expression *left;
-  struct expression *right;
+  NType type;
+  int result;
+  int left;
+  int right;
 } Expr;

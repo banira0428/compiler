@@ -59,7 +59,7 @@ declarations : decl_statement declarations { $$ = build_nodes(DECLARATIONS_AST, 
     | decl_statement { $$ = build_nodes(DECLARATIONS_AST,1, $1); };
 
 decl_statement : DEFINE decl_idents SEMIC { $$ = build_nodes(DEFINE_AST,1, $2); }
-    | ARRAY IDENT array_index SEMIC { $$ = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, $2, NULL)); }
+    | ARRAY IDENT array_index SEMIC { $$ = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, $2, $3)); }
     | func_stmt { $$ = build_nodes(FUNC_DEFINE_AST,1, $1); };
 
 decl_idents : IDENT COMMA decl_idents { $$ = build_nodes(DECL_IDENTS_AST,2, build_ident_node(IDENT_AST,$1), $3); };
