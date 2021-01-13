@@ -248,7 +248,7 @@ void codeGenForElse(Node *node, FILE *fp){
   }
 }
 
-void gen4(Node *node,FILE *fp){
+void codeGenForExprPair(Node *node,FILE *fp){
 
   if(isOperator(node)){
     Expr *expr;
@@ -257,39 +257,8 @@ void gen4(Node *node,FILE *fp){
     expr->result = heap_addr;
     heap_addr += 4;
 
-    if(isOperator(node->child)){
-      expr->left = heap_addr;
-      gen4(node->child, fp);
-      heap_addr += 4;
-    }else if(isIdentOrNumber(node->child)){
-      expr->left = heap_addr;
-      codeGenForIdentOrNumber(node->child, "t1", fp);
-      fprintf(fp, "        sw $t1, %d($t0)\n", offset_vars + heap_addr);
-      heap_addr += 4;
-    }else{
-      if(node->child != NULL){
-        expr->left = heap_addr;
-        gen4(node->child, fp);
-        heap_addr += 4;
-      }
-    }
-
-    if(isOperator(node->child->brother)){
-      expr->right = heap_addr;
-      gen4(node->child->brother, fp);
-      heap_addr += 4;
-    }else if(isIdentOrNumber(node->child->brother)){
-      expr->right = heap_addr;
-      codeGenForIdentOrNumber(node->child->brother, "t3", fp);
-      fprintf(fp, "        sw $t3, %d($t0)\n", offset_vars + heap_addr);
-      heap_addr += 4;
-    }else{
-      if(node->child->brother != NULL){
-        expr->right = heap_addr;
-        gen4(node->child->brother, fp);
-        heap_addr += 4;
-      }
-    }
+    codeGenForExprPart(node->child,fp, "t1",&(expr->left));
+    codeGenForExprPart(node->child->brother,fp,"t3", &(expr->right));
 
     fprintf(fp, "        lw $t1, %d($t0)\n", offset_vars + expr->left);
     fprintf(fp, "        nop\n");
@@ -302,15 +271,33 @@ void gen4(Node *node,FILE *fp){
     fprintf(fp, "        nop\n");
   }else{
     if(node->child != NULL){
-      gen4(node->child, fp);
+      codeGenForExprPair(node->child, fp);
     }
+  }
+}
+
+void codeGenForExprPart(Node *node,FILE *fp,char *reg, int *result){
+
+  *result = heap_addr;
+
+  if(isOperator(node)){
+    codeGenForExprPair(node, fp);
+    heap_addr += 4;
+  }else if(isIdentOrNumber(node)){
+    codeGenForIdentOrNumber(node, reg, fp);
+    fprintf(fp, "        sw $%s, %d($t0)\n", reg,offset_vars + heap_addr);
+    heap_addr += 4;
+  }else{
+    codeGenForExprPair(node, fp);
+    heap_addr += 4;
+    
   }
 }
 
 void codeGenForExpr(Node *node, FILE *fp){
   if(isOperator(node)){
 
-    gen4(node, fp);
+    codeGenForExprPair(node, fp);
     heap_addr = 4;
     
   }else if(isIdentOrNumber(node)){

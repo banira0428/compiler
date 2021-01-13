@@ -7,10 +7,15 @@ lex:
 	gcc lex.yy.c -o ${N} -lfl
 	./${N}
 
-compile: 
+compile-d: 
 	flex -d ${N}.l
 	bison -d ${N}.y
 	gcc -g ${N}.tab.c lex.yy.c AST.c build_node.c debug_functions.c -o ${N} -DYYERROR_VERBOSE -lfl -ly
+
+compile: 
+	flex ${N}.l
+	bison ${N}.y
+	gcc -g ${N}.tab.c lex.yy.c AST.c build_node.c debug_functions.c -o ${N} -lfl -ly
 
 run: 
 	make compile
@@ -33,8 +38,9 @@ addr:
 	addr2line -e ./base ${A}
 
 reg-test:
-	make run N=${N}
-	for i in 1 2 3 4 5; do make maps M=$$i; done
+	make compile
+	for i in 1 2 3 4 5; do ./${N} out/final$$i.s < src/final$$i; done
+	for i in 1 2 3 4 5; do maps -e -q out/final$$i.s -mh4; done
 	for i in 1 2 3 4 5; do diff final$$i.s.mem mem/final$$i.s.mem.orig; done
 	 
 

@@ -88,10 +88,7 @@ extern Node *parse_result;
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "base.tab.h".  */
-#ifndef YY_YY_BASE_TAB_H_INCLUDED
-# define YY_YY_BASE_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -151,7 +148,7 @@ union YYSTYPE
  int ival; // 数
  char* sp; // 変数名
 
-#line 155 "base.tab.c" /* yacc.c:355  */
+#line 152 "base.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -164,11 +161,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_BASE_TAB_H_INCLUDED  */
+
 
 /* Copy the second part of user declarations.  */
 
-#line 172 "base.tab.c" /* yacc.c:358  */
+#line 169 "base.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1353,121 +1350,121 @@ yyreduce:
         case 2:
 #line 55 "base.y" /* yacc.c:1646  */
     { parse_result = build_nodes(PROGRAM_AST,2, (yyvsp[-1].np), (yyvsp[0].np)); }
-#line 1357 "base.tab.c" /* yacc.c:1646  */
+#line 1354 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 56 "base.y" /* yacc.c:1646  */
     { parse_result = build_nodes(PROGRAM_AST,1, (yyvsp[0].np)); }
-#line 1363 "base.tab.c" /* yacc.c:1646  */
+#line 1360 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 58 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(DECLARATIONS_AST, 2, (yyvsp[-1].np), (yyvsp[0].np)); }
-#line 1369 "base.tab.c" /* yacc.c:1646  */
+#line 1366 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 59 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(DECLARATIONS_AST,1, (yyvsp[0].np)); }
-#line 1375 "base.tab.c" /* yacc.c:1646  */
+#line 1372 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 61 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(DEFINE_AST,1, (yyvsp[-1].np)); }
-#line 1381 "base.tab.c" /* yacc.c:1646  */
+#line 1378 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 62 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ARRAY_DEFINE_AST, 1,build_array_node(ARRAY_AST, (yyvsp[-2].sp), (yyvsp[-1].np))); }
-#line 1387 "base.tab.c" /* yacc.c:1646  */
+#line 1384 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 63 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FUNC_DEFINE_AST,1, (yyvsp[0].np)); }
-#line 1393 "base.tab.c" /* yacc.c:1646  */
+#line 1390 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 65 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(DECL_IDENTS_AST,2, build_ident_node(IDENT_AST,(yyvsp[-2].sp)), (yyvsp[0].np)); }
-#line 1399 "base.tab.c" /* yacc.c:1646  */
+#line 1396 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 66 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(DECL_IDENTS_AST,1, build_ident_node(IDENT_AST,(yyvsp[0].sp))); }
-#line 1405 "base.tab.c" /* yacc.c:1646  */
+#line 1402 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 68 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENTS_AST,2, (yyvsp[-1].np), (yyvsp[0].np)); }
-#line 1411 "base.tab.c" /* yacc.c:1646  */
+#line 1408 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 69 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENTS_AST,1, (yyvsp[0].np)); }
-#line 1417 "base.tab.c" /* yacc.c:1646  */
+#line 1414 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 72 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENT_AST, 1, (yyvsp[0].np)); }
-#line 1423 "base.tab.c" /* yacc.c:1646  */
+#line 1420 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 73 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENT_AST, 1, (yyvsp[0].np)); }
-#line 1429 "base.tab.c" /* yacc.c:1646  */
+#line 1426 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 74 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENT_AST, 1, (yyvsp[0].np)); }
-#line 1435 "base.tab.c" /* yacc.c:1646  */
+#line 1432 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 75 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENT_AST, 1, (yyvsp[0].np)); }
-#line 1441 "base.tab.c" /* yacc.c:1646  */
+#line 1438 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 76 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(STATEMENT_AST, 1, (yyvsp[0].np)); }
-#line 1447 "base.tab.c" /* yacc.c:1646  */
+#line 1444 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 78 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ASSIGN_AST,2, build_ident_node(IDENT_AST,(yyvsp[-3].sp)), (yyvsp[-1].np)); }
-#line 1453 "base.tab.c" /* yacc.c:1646  */
+#line 1450 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 79 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ASSIGN_AST,2, build_array_node(ARRAY_AST, (yyvsp[-4].sp), (yyvsp[-3].np)), (yyvsp[-1].np)); }
-#line 1459 "base.tab.c" /* yacc.c:1646  */
+#line 1456 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 82 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(SUR_EXPRESSION_AST, 2, (yyvsp[-2].np), (yyvsp[0].np)); }
-#line 1465 "base.tab.c" /* yacc.c:1646  */
+#line 1462 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 86 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(INC_EXPRESSION_AST, 1, (yyvsp[-1].np)); }
-#line 1471 "base.tab.c" /* yacc.c:1646  */
+#line 1468 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
@@ -1479,7 +1476,7 @@ yyreduce:
             (yyval.np) = build_nodes(MINUS_AST, 2, (yyvsp[-2].np), (yyvsp[0].np)); 
         }
     }
-#line 1483 "base.tab.c" /* yacc.c:1646  */
+#line 1480 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1491,7 +1488,7 @@ yyreduce:
             (yyval.np) = build_nodes(DEC_AST, 1, (yyvsp[0].np));
         }
     }
-#line 1495 "base.tab.c" /* yacc.c:1646  */
+#line 1492 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
@@ -1503,7 +1500,7 @@ yyreduce:
             (yyval.np) = build_nodes(DIV_AST, 2, (yyvsp[-2].np), (yyvsp[0].np)); 
         }
     }
-#line 1507 "base.tab.c" /* yacc.c:1646  */
+#line 1504 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1515,223 +1512,223 @@ yyreduce:
             (yyval.np) = build_nodes(DEC_AST, 1, (yyvsp[0].np));
         }
     }
-#line 1519 "base.tab.c" /* yacc.c:1646  */
+#line 1516 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 132 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FACTOR_AST, 1, (yyvsp[-1].np)); }
-#line 1525 "base.tab.c" /* yacc.c:1646  */
+#line 1522 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 135 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_ADD;}
-#line 1531 "base.tab.c" /* yacc.c:1646  */
+#line 1528 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 136 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_MINUS;}
-#line 1537 "base.tab.c" /* yacc.c:1646  */
+#line 1534 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 138 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_MUL;}
-#line 1543 "base.tab.c" /* yacc.c:1646  */
+#line 1540 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 139 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_DIV;}
-#line 1549 "base.tab.c" /* yacc.c:1646  */
+#line 1546 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 141 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_INC;}
-#line 1555 "base.tab.c" /* yacc.c:1646  */
+#line 1552 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 142 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_DEC;}
-#line 1561 "base.tab.c" /* yacc.c:1646  */
+#line 1558 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
 #line 144 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_ident_node(IDENT_AST,(yyvsp[0].sp));}
-#line 1567 "base.tab.c" /* yacc.c:1646  */
+#line 1564 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
 #line 145 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_num_node(NUM_AST, (yyvsp[0].ival));}
-#line 1573 "base.tab.c" /* yacc.c:1646  */
+#line 1570 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
 #line 146 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_array_node(ARRAY_AST, (yyvsp[-1].sp), (yyvsp[0].np));}
-#line 1579 "base.tab.c" /* yacc.c:1646  */
+#line 1576 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
 #line 149 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ARRAY_INDEX_AST, 2, (yyvsp[-3].np), (yyvsp[-1].np));}
-#line 1585 "base.tab.c" /* yacc.c:1646  */
+#line 1582 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 150 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ARRAY_INDEX_AST, 1, (yyvsp[-1].np)); }
-#line 1591 "base.tab.c" /* yacc.c:1646  */
+#line 1588 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 153 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FUNC_AST, 4, build_ident_node(IDENT_AST,(yyvsp[-7].sp)), (yyvsp[-5].np), (yyvsp[-2].np), (yyvsp[-1].np));}
-#line 1597 "base.tab.c" /* yacc.c:1646  */
+#line 1594 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 156 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(PARAMS_AST, 2, (yyvsp[-2].np), (yyvsp[0].np));}
-#line 1603 "base.tab.c" /* yacc.c:1646  */
+#line 1600 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 158 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(PARAMS_AST, 0);}
-#line 1609 "base.tab.c" /* yacc.c:1646  */
+#line 1606 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 160 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(PARAM_AST, 1, build_ident_node(IDENT_AST,(yyvsp[0].sp)));}
-#line 1615 "base.tab.c" /* yacc.c:1646  */
+#line 1612 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 161 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(PARAM_AST, 1, build_ident_node(IDENT_AST,(yyvsp[-2].sp)));}
-#line 1621 "base.tab.c" /* yacc.c:1646  */
+#line 1618 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 164 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FUNCCALL_AST, 2, build_ident_node(IDENT_AST,(yyvsp[-4].sp)), (yyvsp[-2].np));}
-#line 1627 "base.tab.c" /* yacc.c:1646  */
+#line 1624 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 167 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ARGS_AST, 2, (yyvsp[-2].np), (yyvsp[0].np));}
-#line 1633 "base.tab.c" /* yacc.c:1646  */
+#line 1630 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 168 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ARGS_AST, 1, (yyvsp[0].np));}
-#line 1639 "base.tab.c" /* yacc.c:1646  */
+#line 1636 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 172 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(WHILE_AST, 2, (yyvsp[-4].np), (yyvsp[-1].np));}
-#line 1645 "base.tab.c" /* yacc.c:1646  */
+#line 1642 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 173 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(WHILE_AST, 1, (yyvsp[-2].np));}
-#line 1651 "base.tab.c" /* yacc.c:1646  */
+#line 1648 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 175 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_AST, 4, (yyvsp[-6].np), (yyvsp[-5].np), (yyvsp[-4].np), (yyvsp[-1].np));}
-#line 1657 "base.tab.c" /* yacc.c:1646  */
+#line 1654 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 177 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_ASSIGN_AST, 1, (yyvsp[0].np)); }
-#line 1663 "base.tab.c" /* yacc.c:1646  */
+#line 1660 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 178 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_ASSIGN_AST, 0); }
-#line 1669 "base.tab.c" /* yacc.c:1646  */
+#line 1666 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 180 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_COND_AST, 1, (yyvsp[-1].np)); }
-#line 1675 "base.tab.c" /* yacc.c:1646  */
+#line 1672 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 181 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_COND_AST, 0); }
-#line 1681 "base.tab.c" /* yacc.c:1646  */
+#line 1678 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 183 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_EXPR_AST, 1, (yyvsp[0].np)); }
-#line 1687 "base.tab.c" /* yacc.c:1646  */
+#line 1684 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 184 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(FOR_EXPR_AST, 0); }
-#line 1693 "base.tab.c" /* yacc.c:1646  */
+#line 1690 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 186 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(IF_AST, 1, (yyvsp[0].np)); }
-#line 1699 "base.tab.c" /* yacc.c:1646  */
+#line 1696 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 187 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(IF_AST, 2, (yyvsp[-1].np), (yyvsp[0].np)); }
-#line 1705 "base.tab.c" /* yacc.c:1646  */
+#line 1702 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
 #line 188 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(IF_AST, 2, (yyvsp[-2].np), (yyvsp[0].np)); }
-#line 1711 "base.tab.c" /* yacc.c:1646  */
+#line 1708 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
 #line 191 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(IF_BLOCK_AST, 2, (yyvsp[-4].np), (yyvsp[-1].np)); }
-#line 1717 "base.tab.c" /* yacc.c:1646  */
+#line 1714 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
 #line 193 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ELIF_BLOCK_AST, 1, (yyvsp[0].np)); }
-#line 1723 "base.tab.c" /* yacc.c:1646  */
+#line 1720 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
 #line 195 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ELSE_BLOCK_AST, 2, (yyvsp[-1].np), (yyvsp[0].np)); }
-#line 1729 "base.tab.c" /* yacc.c:1646  */
+#line 1726 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
 #line 196 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(ELSE_BLOCK_AST, 1, (yyvsp[-1].np)); }
-#line 1735 "base.tab.c" /* yacc.c:1646  */
+#line 1732 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
@@ -1749,47 +1746,47 @@ yyreduce:
         (yyval.np) = build_nodes(GTE_AST, 2, (yyvsp[-2].np), (yyvsp[0].np)); 
     }
 }
-#line 1753 "base.tab.c" /* yacc.c:1646  */
+#line 1750 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
 #line 213 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_EQ;}
-#line 1759 "base.tab.c" /* yacc.c:1646  */
+#line 1756 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
 #line 214 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_LT;}
-#line 1765 "base.tab.c" /* yacc.c:1646  */
+#line 1762 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
 #line 215 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_GT;}
-#line 1771 "base.tab.c" /* yacc.c:1646  */
+#line 1768 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
 #line 216 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_LTE;}
-#line 1777 "base.tab.c" /* yacc.c:1646  */
+#line 1774 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
 #line 217 "base.y" /* yacc.c:1646  */
     { (yyval.ival) = OP_GTE;}
-#line 1783 "base.tab.c" /* yacc.c:1646  */
+#line 1780 "base.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
 #line 219 "base.y" /* yacc.c:1646  */
     { (yyval.np) = build_nodes(BREAK_AST, 0); }
-#line 1789 "base.tab.c" /* yacc.c:1646  */
+#line 1786 "base.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1793 "base.tab.c" /* yacc.c:1646  */
+#line 1790 "base.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

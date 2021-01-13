@@ -18,7 +18,8 @@ void codeGenForCondOp(Node *node, FILE *fp);
 int isCondOperator(Node *node);
 
 void codeGenForExpr(Node *node, FILE *fp);
-void gen4(Node *node,FILE *fp);
+void codeGenForExprPair(Node *node,FILE *fp);
+void codeGenForExprPart(Node *node,FILE *fp,char *reg, int *result);
 void codeGenForOperate(Node *node, FILE *fp);
 int isOperator(Node *node);
 
