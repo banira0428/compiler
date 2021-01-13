@@ -26,10 +26,18 @@ test:
 	./${N} < src/final6 > out/final6.s
 
 maps:
-	maps -e out/final${M}.s -mh4
+	make run M=${M}
+	maps -e -q out/final${M}.s -mh4
 
 addr:
 	addr2line -e ./base ${A}
+
+reg-test:
+	make run N=${N}
+	for i in 1 2 3 4 5; do make maps M=$$i; done
+	for i in 1 2 3 4 5; do diff final$$i.s.mem mem/final$$i.s.mem.orig; done
+	 
+
 
 
 

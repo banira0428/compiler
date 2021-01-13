@@ -54,3 +54,10 @@ step 1000
 quit
 run
 quit
+step 10
+quit
+step 10
+step 5
+step 1
+step 2
+quit

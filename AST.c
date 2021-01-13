@@ -84,10 +84,23 @@ Node* build_array_node(NType t, char* s, Node* index){
   return p;
 }
 
+void printVars(){
+  int i;
+  for(i = 0; i<num_vars;i++){
+    printVar(variables[i]);
+  }
+}
+
 void printVar(Var *var){
   printf("name: %s, ", var->name);
   printf("offset: %d, ", var->offset);
-  printf("size: %d\n", var->size);
+  printf("size: %d, ", var->size);
+  int i;
+  printf("sizes: ");
+  for(i = 0; i< 3 ;i ++){
+    printf("%d,", var->sizes[i]);
+  }
+  printf("\n");
 }
 
 void printNode(Node *node){
@@ -96,6 +109,9 @@ void printNode(Node *node){
       printf("value : %d, ",node->ivalue);
   }
   if(node->type == IDENT_AST){
+      printf("variable : %s",node->variable);
+  }
+  if(node->type == ARRAY_AST){
       printf("variable : %s",node->variable);
   }
   printf("\n");
@@ -157,9 +173,67 @@ void generate_s_file(Node *node, char* filename){
     fclose(fp);
 }
 
+int getArraySize(Node *node, Var *v, int depth){ // param = ARRAY_INDEX
+  if(node->child->type == NUM_AST){
+    v->sizes[depth] = node->child->ivalue;
+    return node->child->ivalue;
+  }else if(node->child->type == ARRAY_INDEX_AST){
+    v->sizes[depth] = node->child->brother->ivalue;
+    return getArraySize(node->child, v, depth + 1) * node->child->brother->ivalue;
+  }
+}
+
+void codeGenForArrayAssign(Node *node, FILE *fp, int offset, int depth, Var *v){  // param = ARRAY_INDEX
+
+  if(node->type == IDENT_AST){
+
+    int n;
+    int size = 4;
+    for(n = depth + 1; n < 3; n++){
+      if(v->sizes[n] != 0){
+        size = size * v->sizes[n];
+      }
+    }
+
+    codeGenForIdentOrNumber(node, "t1", fp);
+    fprintf(fp, "        li $t3, %d\n", size);
+    fprintf(fp, "        mult $t1, $t3\n");
+    fprintf(fp, "        mflo $t1\n");
+  }else if(node->type == NUM_AST){
+
+    int n;
+    int size = 4;
+    for(n = depth + 1; n < 3; n++){
+      if(v->sizes[n] != 0){
+        size = size * v->sizes[n];
+      }
+    }
+
+    fprintf(fp, "        addi $t1, $zero, %d\n", (node->ivalue) * size);
+  }else if(node->type == ARRAY_INDEX_AST){
+    codeGenForArrayAssign(node->child, fp, offset, depth, v);
+    fprintf(fp, "        add $t4, $t1, $zero\n");
+    codeGenForArrayAssign(node->brother, fp, offset, depth + 1, v);
+    fprintf(fp, "        add $t1, $t1, $t4\n");
+  }
+}
+
+Var* getVar(Node *node){
+  int i;
+  for(i = 0; i <num_vars; i++){
+    if(!strcmp(variables[i]->name, node->variable)){
+      return variables[i];
+    }
+  }
+  fprintf(stderr,"Compile Error! undefined variable: %s\n",node->variable);
+  exit(0);
+  return NULL;
+}
+
 void gen_code(Node *node, FILE *fp){
 
   if(node->type == DECL_IDENTS_AST){
+
     Var *v;
     v = (Var *)malloc(sizeof(Var));
     v->offset = offset_vars;
@@ -173,31 +247,52 @@ void gen_code(Node *node, FILE *fp){
     v = (Var *)malloc(sizeof(Var));
     v->offset = offset_vars;
     v->name = node->child->variable;
-    v->size = node->child->child->child->ivalue;
+
+    v->size = getArraySize(node->child->child,v, 0);
+    //v->size = node->child->child->child->ivalue;
+
     variables[num_vars] = v;
     num_vars++;
     offset_vars+= v->size * 4;
 
-  }else if(node->type == ASSIGN_AST){
-    int offset = getOffset(node->child);
-    codeGeneration_for_expression(node->child->brother, fp);
-
-    if(node->child->type == IDENT_AST){
-      fprintf(fp, "        sw $v0, %d($t0)\n", offset);
-    }else if(node->child->type == ARRAY_AST){
-      if(node->child->child->child->type == IDENT_AST){
-        codeGenForIdentOrNumber(node->child->child->child, "t1", fp);
-        fprintf(fp, "        li $t3, 4\n");
-        fprintf(fp, "        mult $t1, $t3\n");
-        fprintf(fp, "        mflo $t1\n");
-        fprintf(fp, "        add $t1, $t1, $t0\n");
-        fprintf(fp, "        addi $t1, $t1, %d\n", offset);
-        fprintf(fp, "        sw $v0, 0($t1)\n");
-      }else if(node->child->child->child->type == NUM_AST){
-        fprintf(fp, "        addi $t1, $t0, %d\n", node->child->child->child->ivalue * 4 + offset);
-        fprintf(fp, "        sw $v0, 0($t1)\n");
-      }
+    if(node->brother != NULL){
+      gen_code(node->brother, fp);
     }
+
+  }else if(node->type == ASSIGN_AST){
+
+    fprintf(fp, "## START_OF_ASSIGN\n");
+
+    fprintf(fp, "## START_OF_ASSIGN_RIGHT\n");
+    codeGeneration_for_expression(node->child->brother, fp);
+    fprintf(fp, "## END_OF_ASSIGN_RIGHT\n");
+
+    codeGenForAssign(node, fp);
+
+    // if(node->child->type == IDENT_AST){
+    //   fprintf(fp, "        sw $v0, %d($t0)\n", offset);
+    // }else if(node->child->type == ARRAY_AST){
+
+    //   codeGenForArrayAssign(node->child->child->child, fp, offset, 0, v);
+    //   fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+    //   fprintf(fp, "        add $t1, $t1, $t0\n");
+    //   fprintf(fp, "        sw $v0, 0($t1)\n");
+
+    //   // if(node->child->child->child->type == IDENT_AST){
+    //   //   codeGenForIdentOrNumber(node->child->child->child, "t1", fp);
+    //   //   fprintf(fp, "        li $t3, 4\n");
+    //   //   fprintf(fp, "        mult $t1, $t3\n");
+    //   //   fprintf(fp, "        mflo $t1\n");
+    //   //   fprintf(fp, "        add $t1, $t1, $t0\n");
+    //   //   fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+    //   //   fprintf(fp, "        sw $v0, 0($t1)\n");
+    //   // }else if(node->child->child->child->type == NUM_AST){
+    //   //   fprintf(fp, "        addi $t1, $t0, %d\n", node->child->child->child->ivalue * 4 + offset);
+    //   //   fprintf(fp, "        sw $v0, 0($t1)\n");
+    //   // }
+    // }
+
+    fprintf(fp, "## END_OF_ASSIGN\n");
 
     
   }else if(node->type == WHILE_AST){
@@ -216,6 +311,29 @@ void gen_code(Node *node, FILE *fp){
     fprintf(fp, "        nop\n");
     fprintf(fp, "$EXIT%d:\n",n);
 
+  }else if(node->type == FOR_AST){
+    int n = num_loops;
+    num_loops++;
+
+    fprintf(fp, "## START_OF_FOR_ASSIGN\n");
+    codeGeneration_for_expression(node->child->child->child->brother, fp);
+    codeGenForAssign(node->child->child, fp);
+    fprintf(fp, "## END_OF_FOR_ASSIGN\n");
+
+    fprintf(fp, "$LOOP%d:\n",n);
+
+    codeGeneration_for_cond_expression(node->child->brother->child, fp);
+    char label[10]; 
+    sprintf(label, "$EXIT%d", n);
+    codeGenForBranch(node->child->brother->child,fp, label);
+
+    gen_code(node->child->brother->brother->brother,fp);
+
+    codeGeneration_for_expression(node->child->brother->brother->child,fp);
+    fprintf(fp, "        j $LOOP%d\n", n);
+    fprintf(fp, "        nop\n");
+    fprintf(fp, "$EXIT%d:\n",n);
+  
   }else if(node->type == IF_BLOCK_AST){
 
     codeGenForIf(node, fp);
@@ -246,6 +364,37 @@ void codeGeneration_for_cond_expression(Node *node, FILE *fp){
     //todo 命令セットが足りなくて使えない 
     //codeGenForCondOperate(node, fp);
   }
+}
+
+void codeGenForAssign(Node *node, FILE *fp){ // param: ASSIGN_AST
+    int offset = getOffset(node->child);
+    Var *v = getVar(node->child);
+
+    if(node->child->type == IDENT_AST){
+      fprintf(fp, "        sw $v0, %d($t0)\n", offset);
+    }else if(node->child->type == ARRAY_AST){
+
+      fprintf(fp, "## START_OF_ARRAY\n");
+      codeGenForArrayAssign(node->child->child->child, fp, offset, 0, v);
+      fprintf(fp, "## END_OF_ARRAY\n");
+
+      fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+      fprintf(fp, "        add $t1, $t1, $t0\n");
+      fprintf(fp, "        sw $v0, 0($t1)\n");
+
+      // if(node->child->child->child->type == IDENT_AST){
+      //   codeGenForIdentOrNumber(node->child->child->child, "t1", fp);
+      //   fprintf(fp, "        li $t3, 4\n");
+      //   fprintf(fp, "        mult $t1, $t3\n");
+      //   fprintf(fp, "        mflo $t1\n");
+      //   fprintf(fp, "        add $t1, $t1, $t0\n");
+      //   fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+      //   fprintf(fp, "        sw $v0, 0($t1)\n");
+      // }else if(node->child->child->child->type == NUM_AST){
+      //   fprintf(fp, "        addi $t1, $t0, %d\n", node->child->child->child->ivalue * 4 + offset);
+      //   fprintf(fp, "        sw $v0, 0($t1)\n");
+      // }
+    }
 }
 
 void codeGenForIf(Node *node, FILE *fp){
@@ -308,7 +457,7 @@ void gen4(Node *node,FILE *fp){
 
     if(isOperator(node->child->brother)){
       expr->right = heap_addr;
-      gen4(node->child, fp);
+      gen4(node->child->brother, fp);
       heap_addr += 4;
     }else if(isIdentOrNumber(node->child->brother)){
       expr->right = heap_addr;
@@ -347,6 +496,11 @@ void codeGeneration_for_expression(Node *node, FILE *fp){
     
   }else if(isIdentOrNumber(node)){
     codeGenForIdentOrNumber(node, "v0", fp);
+  }else if(node->type == INC_EXPRESSION_AST){
+    codeGenForIdentOrNumber(node->child, "v0", fp);
+    fprintf(fp, "        addi $v0, $v0, 1\n");
+    codeGenForAssign(node, fp);
+  
   }else{
     codeGeneration_for_expression(node->child, fp);
   }
@@ -416,7 +570,7 @@ int isOperator(Node *node){
 
 int isIdentOrNumber(Node *node){
   if(node == NULL) return 0;
-  return node->type == IDENT_AST || node->type == NUM_AST;
+  return node->type == IDENT_AST || node->type == NUM_AST || node->type == ARRAY_AST;
 }
 
 void codeGenForIdentOrNumber(Node *node,char *reg, FILE *fp){
@@ -427,6 +581,16 @@ void codeGenForIdentOrNumber(Node *node,char *reg, FILE *fp){
     fprintf(fp, "        nop\n");
   }else if(node->type == NUM_AST){
     fprintf(fp, "        li $%s, %d\n", reg, node->ivalue);
+  }else if(node->type == ARRAY_AST){
+    int offset = getOffset(node);
+    Var *v = getVar(node);
+    fprintf(fp, "## START_OF_ARRAY\n");
+    codeGenForArrayAssign(node->child->child,fp, offset, 0, v);
+    fprintf(fp, "## END_OF_ARRAY\n");
+    fprintf(fp, "        addi $t1, $t1, %d\n", offset);
+    fprintf(fp, "        add $t1, $t1, $t0\n");
+    fprintf(fp, "        lw $%s, 0($t1)\n", reg);
+    fprintf(fp, "        nop\n");
   }
 }
 
@@ -437,6 +601,8 @@ int getOffset(Node *node){
       return variables[i]->offset;
     }
   }
+  fprintf(stderr,"Compile Error! undefined variable: %s\n",node->variable);
+  exit(1);
   return 0;
 }
 
@@ -446,6 +612,7 @@ int main(int argc, char* argv[]){
     if(!result && parse_result != NULL){
         printTree(parse_result, 0);
         generate_s_file(parse_result, argv[1]);
+        printVars();
     }
     return 0;
 }

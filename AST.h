@@ -77,6 +77,7 @@ typedef struct variable {
   char* name;
   int offset;
   int size;
+  int sizes[3];
 } Var;
 
 typedef struct expression {
