@@ -10,7 +10,7 @@ lex:
 compile: 
 	flex -d ${N}.l
 	bison -d ${N}.y
-	gcc -g ${N}.tab.c lex.yy.c AST.c build_node.c -o ${N} -DYYERROR_VERBOSE -lfl -ly
+	gcc -g ${N}.tab.c lex.yy.c AST.c build_node.c debug_functions.c -o ${N} -DYYERROR_VERBOSE -lfl -ly
 
 run: 
 	make compile

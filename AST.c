@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "AST.h"
+#include "debug_functions.h"
 
 Node *parse_result = NULL;
 
@@ -13,63 +13,6 @@ int num_branches = 0;
 int num_if_blocks = 0;
 
 int heap_addr = 4;
-
-char* types[] = {"IDENT","NUM","ASSIGN","PLUS","MINUS","MUL","DIV","SUR","INC","DEC","EQ","LT","LTE","GT","GTE",
-  "WHILE","IF","IF_B","ELIF_B","ELSE_B","ARRAY_INDEX","ARRAY",
-  "CONDITION","FOR_ASIGN","FOR_COND","FOR_EXPR","FOR","FUNC","FUNCCALL","BREAK","PARAMS","PARAM","ARGS","ARG",
-  "FACTOR","FORE_INC_FACTOR","TERM","ADD_EXPR","INC_EXPR","SUR_EXPR","EXPR","STATEMENT",
-  "STATEMENTS","DECL_IDENTS","DEFINE","FUNC_DEFINE","ARRAY_DEFINE","DECLARATIONS","PROGRAM"};
-
-void printVars(){
-  int i;
-  for(i = 0; i<num_vars;i++){
-    printVar(variables[i]);
-  }
-}
-
-void printVar(Var *var){
-  printf("name: %s, ", var->name);
-  printf("offset: %d, ", var->offset);
-  printf("size: %d, ", var->size);
-  int i;
-  printf("sizes: ");
-  for(i = 0; i< 3 ;i ++){
-    printf("%d,", var->sizes[i]);
-  }
-  printf("\n");
-}
-
-void printNode(Node *node){
-  printf("type : %s, ",types[node->type]);
-  if(node->type == NUM_AST){
-      printf("value : %d, ",node->ivalue);
-  }
-  if(node->type == IDENT_AST){
-      printf("variable : %s",node->variable);
-  }
-  if(node->type == ARRAY_AST){
-      printf("variable : %s",node->variable);
-  }
-  printf("\n");
-}
-
-void printTree(Node *node, int depth){
-  char space[1024] = "";
-  int i;
-  for(i = 0; i< depth;i++){
-    strcat(space, " ");
-  }
-  strcat(space, "|-");
-  printf(space);
-  printNode(node);
-
-  if(node->child != NULL){
-    printTree(node->child, depth + 2);
-  }
-  if(node->brother != NULL){
-    printTree(node->brother, depth);
-  }
-}
 
 void generate_s_file(Node *node, char* filename){
     FILE *fp;
@@ -548,7 +491,7 @@ int main(int argc, char* argv[]){
     if(!result && parse_result != NULL){
         printTree(parse_result, 0);
         generate_s_file(parse_result, argv[1]);
-        printVars();
+        printVars(variables, num_vars);
     }
     return 0;
 }
