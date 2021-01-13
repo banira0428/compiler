@@ -18,122 +18,72 @@ stop:
         .text 0x00001000
 main:
         la $t0, RESULT
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 1
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 0
         add $t4, $t1, $zero
         addi $t1, $zero, 0
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 0
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 2
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 0
         add $t4, $t1, $zero
         addi $t1, $zero, 4
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 0
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 3
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 8
         add $t4, $t1, $zero
         addi $t1, $zero, 0
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 0
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 4
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 8
         add $t4, $t1, $zero
         addi $t1, $zero, 4
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 0
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 5
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 0
         add $t4, $t1, $zero
         addi $t1, $zero, 0
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 16
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 6
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 0
         add $t4, $t1, $zero
         addi $t1, $zero, 4
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 16
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 7
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 8
         add $t4, $t1, $zero
         addi $t1, $zero, 0
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 16
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 8
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         addi $t1, $zero, 8
         add $t4, $t1, $zero
         addi $t1, $zero, 4
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 16
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
-## START_OF_FOR_ASSIGN
         li $v0, 0
         sw $v0, 48($t0)
-## END_OF_FOR_ASSIGN
 $LOOP0:
         lw $v0, 48($t0)
         nop
@@ -144,10 +94,8 @@ $LOOP0:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT0
         nop
-## START_OF_FOR_ASSIGN
         li $v0, 0
         sw $v0, 52($t0)
-## END_OF_FOR_ASSIGN
 $LOOP1:
         lw $v0, 52($t0)
         nop
@@ -158,11 +106,7 @@ $LOOP1:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT1
         nop
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
         li $v0, 0
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         lw $t1, 48($t0)
         nop
         li $t3, 8
@@ -175,11 +119,9 @@ $LOOP1:
         mult $t1, $t3
         mflo $t1
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 32
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
         lw $v0, 52($t0)
         nop
         addi $v0, $v0, 1
@@ -194,10 +136,8 @@ $EXIT1:
         j $LOOP0
         nop
 $EXIT0:
-## START_OF_FOR_ASSIGN
         li $v0, 0
         sw $v0, 48($t0)
-## END_OF_FOR_ASSIGN
 $LOOP2:
         lw $v0, 48($t0)
         nop
@@ -208,10 +148,8 @@ $LOOP2:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT2
         nop
-## START_OF_FOR_ASSIGN
         li $v0, 0
         sw $v0, 52($t0)
-## END_OF_FOR_ASSIGN
 $LOOP3:
         lw $v0, 52($t0)
         nop
@@ -222,10 +160,8 @@ $LOOP3:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT3
         nop
-## START_OF_FOR_ASSIGN
         li $v0, 0
         sw $v0, 56($t0)
-## END_OF_FOR_ASSIGN
 $LOOP4:
         lw $v0, 56($t0)
         nop
@@ -236,9 +172,6 @@ $LOOP4:
         slt $t2, $t1, $t3
         beq $t2, $zero, $EXIT4
         nop
-## START_OF_ASSIGN
-## START_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         lw $t1, 48($t0)
         nop
         li $t3, 8
@@ -251,13 +184,11 @@ $LOOP4:
         mult $t1, $t3
         mflo $t1
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 32
         add $t1, $t1, $t0
         lw $t1, 0($t1)
         nop
         sw $t1, 68($t0)
-## START_OF_ARRAY
         lw $t1, 48($t0)
         nop
         li $t3, 8
@@ -270,13 +201,11 @@ $LOOP4:
         mult $t1, $t3
         mflo $t1
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 0
         add $t1, $t1, $t0
         lw $t1, 0($t1)
         nop
         sw $t1, 76($t0)
-## START_OF_ARRAY
         lw $t1, 56($t0)
         nop
         li $t3, 8
@@ -289,7 +218,6 @@ $LOOP4:
         mult $t1, $t3
         mflo $t1
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 16
         add $t1, $t1, $t0
         lw $t3, 0($t1)
@@ -310,8 +238,6 @@ $LOOP4:
         add $v0, $t1, $t3
         sw $v0, 64($t0)
         nop
-## END_OF_ASSIGN_RIGHT
-## START_OF_ARRAY
         lw $t1, 48($t0)
         nop
         li $t3, 8
@@ -324,11 +250,9 @@ $LOOP4:
         mult $t1, $t3
         mflo $t1
         add $t1, $t1, $t4
-## END_OF_ARRAY
         addi $t1, $t1, 32
         add $t1, $t1, $t0
         sw $v0, 0($t1)
-## END_OF_ASSIGN
         lw $v0, 56($t0)
         nop
         addi $v0, $v0, 1
