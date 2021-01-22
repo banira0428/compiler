@@ -165,7 +165,8 @@ funccall_stmt : FUNCCALL IDENT L_PARAN args R_PARAN SEMIC { $$ = build_nodes(FUN
 ;
 
 args : expression COMMA args { $$ = build_nodes(ARGS_AST, 2, $1, $3);}
-| expression { $$ = build_nodes(ARGS_AST, 1, $1);};
+| expression { $$ = build_nodes(ARGS_AST, 1, $1);}
+| ;
 
 loop_stmt : while_stmt | for_stmt;
 

@@ -258,7 +258,9 @@ void codeGenForExprPair(Node *node,FILE *fp){
     heap_addr += 4;
 
     codeGenForExprPart(node->child,fp, "t1",&(expr->left));
+    heap_addr += 4;
     codeGenForExprPart(node->child->brother,fp,"t3", &(expr->right));
+    heap_addr += 4;
 
     fprintf(fp, "        lw $t1, %d($t0)\n", offset_vars + expr->left);
     fprintf(fp, "        nop\n");
@@ -279,18 +281,13 @@ void codeGenForExprPair(Node *node,FILE *fp){
 void codeGenForExprPart(Node *node,FILE *fp,char *reg, int *result){
 
   *result = heap_addr;
-
   if(isOperator(node)){
     codeGenForExprPair(node, fp);
-    heap_addr += 4;
   }else if(isIdentOrNumber(node)){
     codeGenForIdentOrNumber(node, reg, fp);
-    fprintf(fp, "        sw $%s, %d($t0)\n", reg,offset_vars + heap_addr);
-    heap_addr += 4;
+    fprintf(fp, "        sw $%s, %d($t0)\n", reg, offset_vars + heap_addr);
   }else{
     codeGenForExprPair(node, fp);
-    heap_addr += 4;
-    
   }
 }
 
