@@ -39,7 +39,6 @@ $LOOP0:
         nop
         sw $t3, 20($t0)
         lw $t1, 16($t0)
-        nop
         lw $t3, 20($t0)
         nop
         add $v0, $t1, $t3
@@ -52,7 +51,6 @@ $LOOP0:
         li $t3, 1
         sw $t3, 20($t0)
         lw $t1, 16($t0)
-        nop
         lw $t3, 20($t0)
         nop
         add $v0, $t1, $t3

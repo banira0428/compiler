@@ -49,7 +49,6 @@ $LOOP0:
         li $t3, 1
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         add $v0, $t1, $t3
@@ -71,7 +70,6 @@ $LOOP1:
         li $t3, 2
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         div $t1, $t3
@@ -97,7 +95,6 @@ $LOOP2:
         nop
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         div $t1, $t3
@@ -117,7 +114,6 @@ $LOOP2:
         nop
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         mult $t1, $t3
@@ -140,7 +136,6 @@ $LOOP2:
         li $t3, 1
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         add $v0, $t1, $t3
@@ -156,7 +151,6 @@ $EXIT2:
         li $t3, 1
         sw $t3, 4032($t0)
         lw $t1, 4028($t0)
-        nop
         lw $t3, 4032($t0)
         nop
         add $v0, $t1, $t3

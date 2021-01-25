@@ -178,6 +178,18 @@ void codeGen(Node *node, FILE *fp){
     fprintf(fp, "$END%d:\n", num_if_blocks);
     num_if_blocks++;
 
+  }else if(node->type == IF_BLOCK_AST){
+
+    codeGenForIf(node, fp);
+
+  }else if(node->type == INC_AST){
+    codeGenForIdentOrNumber(node->child, "v0", fp);
+    fprintf(fp, "        addi $v0, $v0, 1\n");
+    codeGenForAssign(node, fp);
+  }else if(node->type == DEC_AST){
+    codeGenForIdentOrNumber(node->child, "v0", fp);
+    fprintf(fp, "        addi $v0, $v0, -1\n");
+    codeGenForAssign(node, fp);
   }else{
     if(node->child != NULL){
       codeGen(node->child, fp);
@@ -263,7 +275,6 @@ void codeGenForExprPair(Node *node,FILE *fp){
     heap_addr += 4;
 
     fprintf(fp, "        lw $t1, %d($t0)\n", offset_vars + expr->left);
-    fprintf(fp, "        nop\n");
     fprintf(fp, "        lw $t3, %d($t0)\n", offset_vars + expr->right);
     fprintf(fp, "        nop\n");
 
@@ -299,11 +310,14 @@ void codeGenForExpr(Node *node, FILE *fp){
     
   }else if(isIdentOrNumber(node)){
     codeGenForIdentOrNumber(node, "v0", fp);
-  }else if(node->type == INC_EXPRESSION_AST){
+  }else if(node->type == INC_AST){
     codeGenForIdentOrNumber(node->child, "v0", fp);
     fprintf(fp, "        addi $v0, $v0, 1\n");
     codeGenForAssign(node, fp);
-  
+  }else if(node->type == DEC_AST){
+    codeGenForIdentOrNumber(node->child, "v0", fp);
+    fprintf(fp, "        addi $v0, $v0, -1\n");
+    codeGenForAssign(node, fp);
   }else{
     codeGenForExpr(node->child, fp);
   }
@@ -411,6 +425,7 @@ int main(int argc, char* argv[]){
     int result;
     result = yyparse();
     if(!result && parse_result != NULL){
+        printTree(parse_result, 0);
         genAsmFile(parse_result, argv[1]);
     }
     return 0;

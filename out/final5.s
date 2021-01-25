@@ -224,7 +224,6 @@ $LOOP4:
         nop
         sw $t3, 80($t0)
         lw $t1, 76($t0)
-        nop
         lw $t3, 80($t0)
         nop
         mult $t1, $t3
@@ -232,7 +231,6 @@ $LOOP4:
         sw $v0, 72($t0)
         nop
         lw $t1, 68($t0)
-        nop
         lw $t3, 72($t0)
         nop
         add $v0, $t1, $t3

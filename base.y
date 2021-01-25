@@ -73,7 +73,8 @@ statement : assignment_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
     | loop_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
     | cond_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
     | funccall_stmt { $$ = build_nodes(STATEMENT_AST, 1, $1); }
-    | break_statement { $$ = build_nodes(STATEMENT_AST, 1, $1); };
+    | break_statement { $$ = build_nodes(STATEMENT_AST, 1, $1); }
+    | expression SEMIC { $$ = build_nodes(STATEMENT_AST, 1, $1); };
 
 assignment_stmt : IDENT ASSIGN expression SEMIC { $$ = build_nodes(ASSIGN_AST,2, build_ident_node(IDENT_AST,$1), $3); }
                 | IDENT array_index ASSIGN expression SEMIC { $$ = build_nodes(ASSIGN_AST,2, build_array_node(ARRAY_AST, $1, $2), $4); }
@@ -83,7 +84,13 @@ expression : expression SUR inc_expression { $$ = build_nodes(SUR_EXPRESSION_AST
     | inc_expression
     ;
 
-inc_expression : add_expression inc_op  { $$ = build_nodes(INC_EXPRESSION_AST, 1, $1); }
+inc_expression : add_expression inc_op  { 
+        if($2 == OP_INC){
+            $$ = build_nodes(INC_AST, 1, $1);
+        }else{
+            $$ = build_nodes(DEC_AST, 1, $1);
+        }  
+     }
     | add_expression
     ;
 

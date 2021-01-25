@@ -18,18 +18,18 @@ stop:
         .text 0x00001000
 main:
         la $t0, RESULT
-        li $v0, 1
+        li $v0, 0
         sw $v0, 4($t0)
-        li $v0, 1
+        li $v0, 10
         sw $v0, 0($t0)
 $LOOP0:
         lw $v0, 0($t0)
         nop
         add $t4, $v0, $zero
-        li $v0, 6
+        li $v0, 0
         add $t1, $t4, $zero
         add $t3, $v0, $zero
-        slt $t2, $t1, $t3
+        slt $t2, $t3, $t1
         beq $t2, $zero, $EXIT0
         nop
         lw $t1, 4($t0)
@@ -41,22 +41,13 @@ $LOOP0:
         lw $t1, 16($t0)
         lw $t3, 20($t0)
         nop
-        mult $t1, $t3
-        mflo $v0
-        sw $v0, 12($t0)
-        nop
-        sw $v0, 4($t0)
-        lw $t1, 0($t0)
-        nop
-        sw $t1, 16($t0)
-        li $t3, 1
-        sw $t3, 20($t0)
-        lw $t1, 16($t0)
-        lw $t3, 20($t0)
-        nop
         add $v0, $t1, $t3
         sw $v0, 12($t0)
         nop
+        sw $v0, 4($t0)
+        lw $v0, 0($t0)
+        nop
+        addi $v0, $v0, -1
         sw $v0, 0($t0)
         j $LOOP0
         nop
