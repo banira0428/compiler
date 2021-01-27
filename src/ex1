@@ -1,4 +1,2 @@
-func quicksort(define a){
-    define a;
-    a = 1;
-}
+define a;
+funccall abcde(1, 2, 3);

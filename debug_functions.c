@@ -1,14 +1,14 @@
 #include "debug_functions.h"
 
 char* types[] = {"IDENT","NUM","ASSIGN","PLUS","MINUS","MUL","DIV","SUR","INC","DEC","EQ","LT","LTE","GT","GTE",
-  "WHILE","IF","IF_B","ELIF_B","ELSE_B","ARRAY_INDEX","ARRAY",
+  "WHILE","IF","SIMPLE_IF","IF_B","ELIF_B","ELSE_B","ARRAY_INDEX","ARRAY",
   "CONDITION","FOR_ASIGN","FOR_COND","FOR_EXPR","FOR","FUNC","FUNCCALL","BREAK","PARAMS","PARAM","ARGS","ARG",
   "FACTOR","FORE_INC_FACTOR","TERM","ADD_EXPR","INC_EXPR","SUR_EXPR","EXPR","STATEMENT",
   "STATEMENTS","DECL_IDENTS","DEFINE","FUNC_DEFINE","ARRAY_DEFINE","DECLARATIONS","PROGRAM"};
 
-void printVars(Var *variables[], int length){
+void printVars(Var *variables[]){
   int i;
-  for(i = 0; i<length;i++){
+  for(i = 0; variables[i] != NULL;i++){
     printVar(variables[i]);
   }
 }

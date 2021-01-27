@@ -39,9 +39,9 @@ addr:
 
 reg-test:
 	make compile
-	for i in 1 2 3 4 5; do ./${N} out/final$$i.s < src/final$$i; done
-	for i in 1 2 3 4 5; do maps -e -q out/final$$i.s -mh4; done
-	for i in 1 2 3 4 5; do diff final$$i.s.mem mem/final$$i.s.mem.orig; done
+	for i in 1 2 3 4 5 6; do ./${N} out/final$$i.s < src/final$$i; done
+	for i in 1 2 3 4 5 6; do maps -e -q out/final$$i.s -mh4; done
+	for i in 1 2 3 4 5 6; do diff final$$i.s.mem mem/final$$i.s.mem; done
 	 
 
 

@@ -1,0 +1,363 @@
+step 1
+step 2
+quit
+step 10
+step 5
+print_all_regs
+step 5
+print_all_regs
+help
+memdump 0x7ffffff0 0x7ffffffc
+memdump 0x7fffff00 0x7ffffffc
+step 5
+memdump 0x7fffff00 0x7ffffffc
+step 5
+memdump 0x7fffff00 0x7ffffffc
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+quit
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 1
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 5
+memdump 0x7fffffd0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+print_all_regs
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+quit
+step 20
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+continue
+run
+quit
+step 20
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+quit
+step 20
+memdump 0x7fffffa0 0x7ffffffc
+step 5
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+print_all_regs
+step 1
+print_all_regs
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+step 1
+memdump 0x7fffffa0 0x7ffffffc
+quit
+step 100
+memdump 0x7fffffa0 0x7ffffffc
+memdump 0x7fffff00 0x7ffffffc
+step 100
+memdump 0x7fffff00 0x7ffffffc
+step 100
+memdump 0x7fffff00 0x7ffffffc
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+quit
+step 1000
+memdump 0x7fffff00 0x7ffffffc
+quit
+step 20
+step 5
+step 20
+step 1
+memdump 0x7fffff00 0x7ffffffc
+print_all_regs
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+print_all_regs
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+quit
+step 100
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+print_all_regs
+quit
+step 100
+step 1
+step 5
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+quit
+step 100
+step 2
+memdump 0x7fffff00 0x7ffffffc
+step 1
+memdump 0x7fffff00 0x7ffffffc
+step 1
+print_all_regs
+quit
+step 5
+step 10
+memdump 0x7fffff00 0x7ffffffc
+step 10
+step 5
+memdump 0x7fffff00 0x7ffffffc
+step 5
+step 3
+print_all_regs
+step 1
+step 5
+memdump 0x7fffff00 0x7ffffffc
+memdump 0x7fffff60 0x7ffffffc
+step 5
+step 4
+print_all_regs
+step 9
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 3
+step 8
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+step 1
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 6
+step 1
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+step 1
+step 4
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 4
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+print_all_regs
+step 1
+step 3
+print_all_regs
+step 1
+step 2
+step 3
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 7
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+step 1
+step 5
+print_all_regs
+step 1
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+memdump 0x7fffff60 0x7ffffffc
+quit
+step 100
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 5
+step 2
+memdump 0x7fffff60 0x7ffffffc
+step 2
+memdump 0x7fffff60 0x7ffffffc
+step 2
+step 10
+quit
+step 10
+step 4
+step 9
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 10
+step 5
+memdump 0x7fffff60 0x7ffffffc
+step 15
+step 1
+step 15
+step 1
+step 8
+step 1
+step 8
+step 1
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 7
+step 1
+print_all_regs
+step 1
+step 7
+print_all_regs
+memdump 0x7fffff60 0x7ffffffc
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+print_all_regs
+step 8
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 8
+step 1
+print_all_regs
+step 1
+step 5
+step 1
+print_all_regs
+step 1
+step 8
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 30
+memdump 0x7fffff60 0x7ffffffc
+step 2
+step 30
+print_all_regs
+step 2
+print_all_regs
+step 30
+memdump 0x7fffff60 0x7ffffffc
+step 2
+step 30
+step 2
+step 30
+memdump 0x7fffff60 0x7ffffffc
+step 2
+step 1
+step 15
+print_all_regs
+step 1
+memdump 0x7fffff60 0x7ffffffc
+step 1
+step 13
+print_all_regs
+step 14
+step 2
+step 30
+step 2
+step 30
+step 2
+step 10
+step 1
+step 5
+print_all_regs
+step 1
+step 8
+print_all_regs
+step 1
+quit
