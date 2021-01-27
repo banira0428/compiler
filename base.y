@@ -161,11 +161,11 @@ func_stmt : FUNC IDENT L_PARAN params R_PARAN L_BRACE declarations statements R_
 ;
 
 params : param COMMA params { $$ = build_nodes(PARAMS_AST, 2, $1, $3);}
-| param 
+| param { $$ = build_nodes(PARAMS_AST, 1, $1);}
 | { $$ = build_nodes(PARAMS_AST, 0);};
 
 param : DEFINE IDENT { $$ = build_nodes(PARAM_AST, 1, build_ident_node(IDENT_AST,$2));}
- | ARRAY IDENT L_BRACKET R_BRACKET { $$ = build_nodes(PARAM_AST, 1, build_ident_node(IDENT_AST,$2));}
+ | ARRAY IDENT L_BRACKET R_BRACKET { $$ = build_nodes(PARAM_AST, 1, build_array_node(ARRAY_AST,$2, NULL));}
  ;
 
 funccall_stmt : FUNCCALL IDENT L_PARAN args R_PARAN SEMIC { $$ = build_nodes(FUNCCALL_AST, 2, build_ident_node(IDENT_AST,$2), $4);}
@@ -193,7 +193,7 @@ for_expr : expression { $$ = build_nodes(FOR_EXPR_AST, 1, $1); }
 
 cond_stmt : if_block { $$ = build_nodes(IF_AST, 1, $1); }
             | if_block else_block { $$ = build_nodes(IF_AST, 2, $1, $2); }
-            | IF L_PARAN condition R_PARAN statement { $$ = build_nodes(IF_AST, 2, $3, $5); }
+            | IF L_PARAN condition R_PARAN statement { $$ = build_nodes(SIMPLE_IF_AST, 2, $3, $5); }
             ;
 
 if_block : IF L_PARAN condition R_PARAN L_BRACE statements R_BRACE { $$ = build_nodes(IF_BLOCK_AST, 2, $3, $6); };

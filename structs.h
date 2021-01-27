@@ -16,6 +16,7 @@ typedef enum {
     GTE_AST,
     WHILE_AST, // while のノード型
     IF_AST, // if のノード型
+    SIMPLE_IF_AST,
     IF_BLOCK_AST,
     ELIF_BLOCK_AST,
     ELSE_BLOCK_AST,
@@ -78,6 +79,7 @@ typedef struct variable {
   int offset;
   int size;
   int sizes[3];
+  int isAddress;
 } Var;
 
 typedef struct expression {
