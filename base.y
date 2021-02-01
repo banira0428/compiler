@@ -80,11 +80,7 @@ assignment_stmt : IDENT ASSIGN expression SEMIC { $$ = build_nodes(ASSIGN_AST,2,
                 | IDENT array_index ASSIGN expression SEMIC { $$ = build_nodes(ASSIGN_AST,2, build_array_node(ARRAY_AST, $1, $2), $4); }
                 ;
 
-expression : expression SUR inc_expression { $$ = build_nodes(SUR_EXPRESSION_AST, 2, $1, $3); }
-    | inc_expression
-    ;
-
-inc_expression : add_expression inc_op  { 
+expression : add_expression inc_op  { 
         if($2 == OP_INC){
             $$ = build_nodes(INC_AST, 1, $1);
         }else{
@@ -117,8 +113,10 @@ term : term mul_op fore_inc_factor
     { 
         if($2 == OP_MUL){
             $$ = build_nodes(MUL_AST, 2, $1, $3); 
-        }else{
+        }else if($2 == OP_DIV){
             $$ = build_nodes(DIV_AST, 2, $1, $3); 
+        }else{
+            $$ = build_nodes(SUR_AST, 2, $1, $3); 
         }
     }
     | fore_inc_factor 
@@ -143,7 +141,8 @@ add_op : ADD { $$ = OP_ADD;}
 | SUB { $$ = OP_MINUS;};
 
 mul_op : MUL { $$ = OP_MUL;}
-| DIV { $$ = OP_DIV;};
+| DIV { $$ = OP_DIV;}
+| SUR { $$ = OP_SUR;};
 
 inc_op : INC { $$ = OP_INC;}
         | DEC { $$ = OP_DEC;};

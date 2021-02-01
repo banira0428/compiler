@@ -40,28 +40,18 @@ $LOOP0:
         nop
         lw $t1, 16($t0)
         nop
-        sw $t1, 32($t0)
+        sw $t1, 28($t0)
         li $t3, 15
-        sw $t3, 36($t0)
-        lw $t1, 32($t0)
-        lw $t3, 36($t0)
+        sw $t3, 32($t0)
+        lw $t1, 28($t0)
+        lw $t3, 32($t0)
         nop
         div $t1, $t3
-        mflo $v0
-        sw $v0, 28($t0)
-        nop
-        li $t3, 15
-        sw $t3, 44($t0)
-        lw $t1, 28($t0)
-        lw $t3, 44($t0)
-        nop
-        mult $t1, $t3
-        mflo $v0
+        mfhi $v0
         sw $v0, 24($t0)
         nop
         add $t4, $v0, $zero
-        lw $v0, 16($t0)
-        nop
+        li $v0, 0
         add $t1, $t4, $zero
         add $t3, $v0, $zero
         bne $t1, $t3, $L0
@@ -82,28 +72,18 @@ $LOOP0:
 $L0:
         lw $t1, 16($t0)
         nop
-        sw $t1, 32($t0)
+        sw $t1, 28($t0)
         li $t3, 3
-        sw $t3, 36($t0)
-        lw $t1, 32($t0)
-        lw $t3, 36($t0)
+        sw $t3, 32($t0)
+        lw $t1, 28($t0)
+        lw $t3, 32($t0)
         nop
         div $t1, $t3
-        mflo $v0
-        sw $v0, 28($t0)
-        nop
-        li $t3, 3
-        sw $t3, 44($t0)
-        lw $t1, 28($t0)
-        lw $t3, 44($t0)
-        nop
-        mult $t1, $t3
-        mflo $v0
+        mfhi $v0
         sw $v0, 24($t0)
         nop
         add $t4, $v0, $zero
-        lw $v0, 16($t0)
-        nop
+        li $v0, 0
         add $t1, $t4, $zero
         add $t3, $v0, $zero
         bne $t1, $t3, $L1
@@ -124,28 +104,18 @@ $L0:
 $L1:
         lw $t1, 16($t0)
         nop
-        sw $t1, 32($t0)
+        sw $t1, 28($t0)
         li $t3, 5
-        sw $t3, 36($t0)
-        lw $t1, 32($t0)
-        lw $t3, 36($t0)
+        sw $t3, 32($t0)
+        lw $t1, 28($t0)
+        lw $t3, 32($t0)
         nop
         div $t1, $t3
-        mflo $v0
-        sw $v0, 28($t0)
-        nop
-        li $t3, 5
-        sw $t3, 44($t0)
-        lw $t1, 28($t0)
-        lw $t3, 44($t0)
-        nop
-        mult $t1, $t3
-        mflo $v0
+        mfhi $v0
         sw $v0, 24($t0)
         nop
         add $t4, $v0, $zero
-        lw $v0, 16($t0)
-        nop
+        li $v0, 0
         add $t1, $t4, $zero
         add $t3, $v0, $zero
         bne $t1, $t3, $L2
